@@ -8,6 +8,8 @@ let emptyObstascleY = 0
 let ticks = 0
 let bird: game.LedSprite = null
 let obstacles: game.LedSprite[] = []
+let speed = 1000
+let score = 0
 bird = game.createSprite(0, 2)
 bird.set(LedSpriteProperty.Blink, 300)
 basic.forever(function () {
@@ -24,12 +26,18 @@ basic.forever(function () {
                 obstacles.push(game.createSprite(4, index))
             }
         }
+        if (speed > 300)
+        {
+            speed = speed - 20
+        }
+        score += 1
     }
     for (let obstacle of obstacles) {
         if (obstacle.get(LedSpriteProperty.X) == bird.get(LedSpriteProperty.X) && obstacle.get(LedSpriteProperty.Y) == bird.get(LedSpriteProperty.Y)) {
+            game.setScore(score)
             game.gameOver()
         }
     }
     ticks += 1
-    basic.pause(1000)
+    basic.pause(speed)
 })
